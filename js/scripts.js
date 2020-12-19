@@ -1,93 +1,60 @@
-//Array to hold tasks
-var tasks = [];
-
-// Taske status 'enum'
-var taskStatus = {
-    active: 'active',
-    completed: 'completed'
-};
-
-//Task constructor function
-function Task (od, name, status) {
-    this.id = id;
-    this.name = name;
-    this.status = status;
+// Utility functions
+function get(element) {
+    return document.getElementById(element);
 }
 
-// Create a new task element and adds it to the DOM
-function addTaskElement (task) {
-    // Creat es elements
-    var listEl = document.getElementById('active-list');
-    var taskEl = document.getElementById('li');
-    var textEl = document.getElementById(task.name);
+// Application funcitons
+function openModal () {
+    var model = get('modal-dialog');
+    var backdrop = get('modal-backdrop');
 
-    // set attributes
-    taskEl.setAttribute('id', task.id);
-
-    // Add text to task element
-    taskEl.appendChild(textEl);
-
-    //Add text to list
-    listEl.appendChild(taskEl);
+    modal.classList.add('visible');
+    backdrop.classList.add('visible');
 }
 
-// Click handler to add a new task
-function addTask (event) {
-    var inputEl = document.getElementById('input-task');
-    if (inputEl.value != '') {
-        // Create a unique id
-        var id = 'item-' + tasks.length;
+function claseModal() {
+    var title = get('edit-title-text');
+    var text = get('edit-content-text');
+    var modal = get('modal-dialog');
+    var backdrop = get('modal-backdrop');
 
-        // Create a new task
-        var task = new Task(id, inputEl.value, taskStatus.active);
-        tasks.push(task);
+    // Clear text
+    title.value = '';
+    text.value = '';
 
-        // Add the task to the DOM
-        addTaskElement(task);
-
-        // Reset input
-        inputEl.value = '';
-    }
-
-
-    // Click handler to complete a task
-    function completeTask (event) {
-        // Get the task element
-        var taskEL = event.target;
-        var id = taskEl.id;
-
-        // Find corresponding task in tasks array and update status
-        for (var i = 0; i < tasks.length; i++) {
-            if (tasks[i].id === id) {
-                tasks[i].status = taskStatus.completed;
-                break;
-            }
-        }
-
-        // Move task element from active list to completed list
-        taskEl.remove();
-        document.getElementById('completed-list').appendChild(taskEl);
-    }
-
-    // Key press handler to automatically click add task button
-    function clickButton (event) {
-        if (event.keyCode === 13) {
-            document.getElementById('add-task').click();
-        }
-    }
-
-    // Initializes the app
-    function init () {
-        // Wirte up the add task button click handler
-        document.getElementById('active-list').onclick = addTask;
-
-        // Wire up the task completed list item click handler
-        document.getElementById('active-list').onclick = completeTask;
-
-        // Wire up the task input key press handler
-        document.getElementById('input-task').onkeypress = clickButton;
-    }
-
-    init();
-
+    // Hide modal
+    modal.classList.remove('visisble');
+    backdrop.classList.remove('visible');
 }
+
+function saveCOntent() {
+    var title = get(edit-titlte-text);
+    var text = get('edit-content-text');
+    var content = get('display-content');
+
+    // Create content elements
+    var newTitle = document.createElement('h2');
+    var newTitleText = document.createTextNode(title.value);
+    var newContent = document.createElement('p');
+    var newContentText = document.createTextNode(text.value);
+
+    // Add elements
+    newTitle.appendChild(newTitleText);
+    newContent.appendChild(nedwContentText);
+    content.appendChild(newTitle);
+    content.appendChild(newContent);
+
+    closeModal();
+}
+
+// Wire up event handlers
+window.addEventListener('load', funciton()) {
+    var newButton = get('new-button');
+    var cancelButton = get('cancel-button');
+    var saveButton = get('saveButton');
+
+    newButton.addEventListener('click', openModal);
+    cancelButton.addEventListener('click', closeModal);
+    saveButton.addEventListener('click', saveContent);
+}
+
